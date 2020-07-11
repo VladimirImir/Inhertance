@@ -27,19 +27,19 @@ public:
 	}
 	const string& set_name(const string& name)
 	{
-		this->name = name;
+		return this->name = name;
 	}	
 	const string& set_surname(const string& surname)
 	{
-		this->surname = surname;
+		return this->surname = surname;
 	}
 	int set_age(int age)
 	{
-		this->age = age;
+		return this->age = age;
 	}
 	bool set_gender(bool gender)
 	{
-		this->gender = gender;
+		return this->gender = gender;
 	}
 	//		Constructor:
 	Human(const string& name, const string& surname, int age, bool gender)
@@ -85,19 +85,19 @@ public:
 	}
 	const string& set_group(const string& group)
 	{
-		this->group = group;
+		return this->group = group;
 	}
 	int set_rating(int rating)
 	{
-		this->rating = rating;
+		return this->rating = rating;
 	}
 	bool set_attendance(bool attendance)
 	{
-		this->attendance = attendance;
+		return this->attendance = attendance;
 	}
 	const string& set_specialty(const string& specialty)
 	{
-		this->specialty = specialty;
+		return this->specialty = specialty;
 	}
 	//		Constructor:
 	Student(const string& group, int rating, bool attendance, const string& specialty, const string& name, const string& surname, int age, bool gender) : Human(name, surname, age, gender)
@@ -143,19 +143,19 @@ public:
 	}
 	const string& set_subject(const string& subject)
 	{
-		this->subject = subject;
+		return this->subject = subject;
 	}
 	const string& set_experience(const string& experience)
 	{
-		this->experience = experience;
+		return this->experience = experience;
 	}
 	const string& set_specialty(const string& specialty)
 	{
-		this->specialty = specialty;
+		return this->specialty = specialty;
 	}
 	const string& set_evil(const string& evil)
 	{
-		this->evil = evil;
+		return this->evil = evil;
 	}
 	//		Constructor:
 	Teacher(const string& subject, const string& experience, const string& specialty, const string& evil, const string& name, const string& surname, int age, bool gender) : Human(name, surname, age, gender)
@@ -173,6 +173,17 @@ public:
 	{
 		Human::print();
 		cout << "Subject: " << subject << endl << "Experience: " << experience << endl << "Specialty: " << specialty << endl << "Evil: " << evil << endl;
+	}
+
+};
+
+class Graduate :public Student
+{
+	string diploma_theme;
+public:
+	const string& get_diploma_theme()
+	{
+		return diploma_theme;
 	}
 
 };
