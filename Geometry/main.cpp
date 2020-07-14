@@ -172,14 +172,28 @@ namespace Geometry
 		}
 		double area()const
 		{
-			return 0;
+			return sqrt((perimeter() / 2) * ((perimeter() / 2) - side1) * ((perimeter() / 2) - side2) * ((perimeter() / 2) - side3));
 		}
 		double perimeter()const
 		{
-			return 0;
+			return side1 + side2 + side3;
 		}
 		void draw()const
-		{}
+		{
+			for (int i = 0; i < side1; i++)
+			{
+				for (int j = 1; j <= i; j++)
+				{
+					std::cout << " ";
+				}
+				for (int j = side1; j > i; j--)
+				{
+					std::cout << "* ";
+				}
+				std::cout << std::endl;
+			}
+			std::cout << std::endl;
+		}
 	};
 }
 
@@ -196,12 +210,17 @@ void main()
 	std::cout << "Rectangle perimeter:\t" << rect.perimeter() << std::endl;
 	rect.draw();
 
-	try
+	Geometry::Triagle trgl(7, 7, 7);
+	std::cout << "Rectangle area:\t" << trgl.area() << std::endl;
+	std::cout << "Rectangle perimeter:\t" << trgl.perimeter() << std::endl;
+	trgl.draw();
+
+	/*try
 	{
-		Geometry::Triagle trgl(1, 2, 3);
+		Geometry::Triagle trgl(4, 4, 4);
 	}
 	catch (const std::exception & e)
 	{
 		std::cerr << e.what() << std::endl;
-	}
+	}*/
 }
