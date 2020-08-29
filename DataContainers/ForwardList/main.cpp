@@ -1,5 +1,5 @@
 #include<iostream>
-using namespace std;
+//using namespace std;
 using std::cin;
 using std::cout;
 using std::endl;
@@ -9,22 +9,68 @@ class Element
 {
     int Data;         // Содержит значени элемента
     Element* pNext;   // Адрес след. элемента
-    static int count; // Кол-во элементов
+    //static int count; // Кол-во элементов
 public:
     Element(int Data, Element* pNext = nullptr) :Data(Data), pNext(pNext)
     {
-        count++;
+        //count++;
         //cout << "EConstructor:\t" << this << endl;
     }
     ~Element()
     {
-        count--;
+        //count--;
         //cout << "EDestructor:\t" << this << endl;
     }
+    friend class Iterator;
     friend class ForwardList;
 };
 
-int Element::count = 0;
+//int Element::count = 0;
+
+class Iterator
+{
+    Element* Temp;
+public:
+    Iterator(Element* Temp = nullptr)
+    {
+        this->Temp = Temp;
+        cout << "ItConstructor:\t" << this << endl;
+    }
+    ~Iterator()
+    {
+        cout << "ItDestructor:\t" << this << endl;
+    }
+
+    Iterator& operator++()
+    {
+        Temp = Temp->pNext;
+        return *this;
+    }
+    Iterator operator++(int)
+    {
+        Iterator old = *this;
+        Temp = Temp->pNext;
+        return old;
+    }
+
+    int& operator*()
+    {
+        return Temp->Data;
+    }
+
+    bool operator!=(const Iterator& other)const
+    {
+        return this->Temp != other.Temp;
+    }
+    bool operator!=(Element* other_el)const
+    {
+        return this->Temp != other_el;
+    }
+    operator bool()const
+    {
+        return Temp;
+    }
+};
 
 class ForwardList
 {
@@ -34,6 +80,14 @@ public:
     int get_size()const
     {
         return this->size;
+    }
+    Iterator begin()
+    {
+        return Head;
+    }
+    Iterator end()
+    {
+        return nullptr;
     }
     ForwardList()
     {
@@ -57,9 +111,6 @@ public:
         this->Head = nullptr;
         this->size = 0;
         for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)push_back(Temp->Data);
-        {
-            //cout << Temp << "\t" << Temp->Data << "\t" << Temp->pNext << endl;
-        }
         cout << "LCopyConstructor:\t" << this << endl;
     }
     ~ForwardList()
@@ -85,6 +136,9 @@ public:
         // Теперь этот элемент нужно включить в список.
         New->pNext = Head;
         Head = New;
+
+        Head = new Element(Data, Head);
+
         size++;
     }
 
@@ -169,14 +223,23 @@ public:
 
     void print()
     {
+#ifdef old_style
         Element* Temp = Head; // Temp - это итератор
-                             // Итератор - это указатель, при помощи которого можно получить доступ к элементам структуры данных
+             // Итератор - это указатель, при помощи которого можно получить доступ к элементам структуры данных
         while (Temp != nullptr)
         {
             cout << Temp << "\t" << Temp->Data << "\t" << Temp->pNext << endl;
             Temp = Temp->pNext; // Переход на след. элемент
         }
-        cout << "List size: " << size << endl;
+#endif // old_style
+        //for (Iterator Temp = Head; Temp; Temp++/*Temp = Temp->pNext*/)
+        for (Iterator Temp = begin(); Temp != end(); Temp++/*Temp = Temp->pNext*/)
+        {
+            //cout << Temp << tab << Temp->Data << tab << Temp->pNext << endl;
+            cout << *Temp << endl;
+        }
+        //cout << "List size: " << size << endl;
+
     }
 };
 #define delimiter "\n------------------------------------\n"
@@ -258,14 +321,25 @@ void main()
     }
 #endif // PREFORMANCE_CHECK
 
-    int n = 5;
+    //const int n = 5;
     int arr[] = { 3, 5, 8, 13, 21 };
-    for (int i = 0; i < size(arr); i++)
+    /*for (int i = 0; i < sizeof(arr) / sizeof(int); i++)
     {
-        cout << arr[i] << "\t";
+        cout << arr[i] << tab;
+    }
+    cout << endl;*/
+    for (int i : arr)
+    {
+        cout << i << "\t";
     }
     cout << endl;
 
-    ForwardList lits = { 3, 5, 8, 13, 21 };
+    ForwardList list = { 3, 5, 8, 13, 21 };
+    list.print();
+    for (int i : list)
+    {
+        cout << i << "\t";
+    }
+    cout << endl;
 
 }
