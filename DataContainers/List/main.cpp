@@ -22,6 +22,8 @@ class List
 			cout << "EDestructor:\t" << this << endl;
 		}
 		friend class List;
+		friend class Iterator;
+		friend class ReverseIterator;
 	};// *Head, *Tail;
 	Element* Head;
 	Element* Tail;
@@ -71,6 +73,47 @@ public:
 		}
 	};
 
+	class ReverseIterator
+	{
+		Element* Temp;
+	public:
+		ReverseIterator(Element* Temp = nullptr) :Temp(Temp)
+		{
+			cout << "RItConstruvtor:\t" << this << endl;
+		}
+		~ReverseIterator()
+		{
+			cout << "RItDestruvtor:\t" << this << endl;
+		}
+		ReverseIterator& operator++()
+		{
+			Temp = Temp->pPrev;
+			return *this;
+		}		
+		ReverseIterator& operator--()
+		{
+			Temp = Temp->pNext;
+			return *this;
+		}
+		const int& operator*()const
+		{
+			return Temp->Data;
+		}
+		int& operator*()
+		{
+			return Temp->Data;
+		}
+		bool operator!=(const ReverseIterator& other)const
+		{
+			return this->Temp != other.Temp;
+		}
+
+		operator bool()const
+		{
+			return this->Temp;
+		}
+	};
+
 	const Iterator begin()const
 	{
 		return this->Head;
@@ -80,7 +123,22 @@ public:
 	{
 		return nullptr;
 	}
-
+	const ReverseIterator rbegin()const
+	{
+		return Tail;
+	}
+	ReverseIterator rbegin()
+	{
+		return Tail;
+	}
+	const ReverseIterator rend()const
+	{
+		return nullptr;
+	}
+	ReverseIterator rend()
+	{
+		return nullptr;
+	}
 	List()
 	{
 		Head = Tail = nullptr;
@@ -159,6 +217,10 @@ public:
 		}
 		size++;
 	}
+	void insert(int Index, int value)
+	{
+
+	}
 
 	//			Removing elements:
 
@@ -194,7 +256,6 @@ public:
 		}
 		size--;
 	}
-
 	void erase(int Index)
 	{
 		if (Index == 0)
@@ -238,10 +299,10 @@ public:
 	void print()
 	{
 		//for (Element* Temp = Head; Temp; Temp++/*Temp = Temp->pNext*/)
-		for(Iterator it = Head; it; ++it) // потом доделать
+		for(Iterator it = Head; it; ++it) 
 		{
 			//cout << Temp->pPrev << tab << Temp << tab << Temp->Data << tab << Temp->pNext << endl;
-			cout << *it << "\t"; // потом доделать
+			cout << *it << "\t";
 		}
 		cout << "List size: \t" << size << endl;
 	}
@@ -273,16 +334,20 @@ void main()
 	list.print();
 	//list.pop_front();
 	list = list;
-	list.print_reverse();
+	//list.print_reverse();
 #endif // BASE_CHECK
 
 
 	/*int index;
+	//int value;
 	cout << "Type index of deleting element: "; cin >> index;
 	list.erase(index);
 
-	list.print();
-	list.print_reverse();*/
+	list.print();*/
+	//list.print_reverse();
+	/*cout << "¬ведите индекс: "; cin >> index;
+	cout << "¬ведите значение по индуксы: "; cin >> value;
+	list.print();*/
 
 #ifdef COPY_METHODS
 	cout << "\n===============================================\n";
@@ -299,10 +364,21 @@ void main()
 #endif // COPY_METHODS
 
 	List list = { 3, 5, 8, 13, 21 };
-	list.print();
-	/*for (int i : list)
+	/*list.print();
+	for (int i : list)
 	{
 		cout << i << tab;
 	}
 	cout << endl;*/
+	for (List::Iterator it = list.begin(); it != list.end(); ++it)
+	{
+		cout << *it << "\t";
+	}
+	cout << endl;
+	//for (List::Iterator it = list.end(); it; --it)
+	for (List::ReverseIterator rit = list.rbegin(); rit != list.rend(); ++rit)
+	{
+		cout << *rit << "\t";
+	}
+	cout << endl;
 }
