@@ -316,7 +316,7 @@ public:
 	}
 };
 
-#define BASE_CHECK
+//#define BASE_CHECK
 //#define COPY_METHODS
 
 void main()
@@ -364,13 +364,13 @@ void main()
 	cout << "\n===============================================\n";
 #endif // COPY_METHODS
 
-	//List list = { 3, 5, 8, 13, 21 };
-	/*list.print();
+	List list = { 3, 5, 8, 13, 21 };
+	list.print();
 	for (int i : list)
 	{
 		cout << i << tab;
 	}
-	cout << endl;*/
+	cout << endl;
 	for (List::Iterator it = list.begin(); it != list.end(); ++it)
 	{
 		cout << *it << "\t";
