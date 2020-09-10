@@ -217,9 +217,9 @@ public:
 		}
 		size++;
 	}
-	void insert(int Index, int value)
+	void insert()
 	{
-
+	
 	}
 
 	//			Removing elements:
@@ -316,7 +316,7 @@ public:
 	}
 };
 
-//#define BASE_CHECK
+#define BASE_CHECK
 //#define COPY_METHODS
 
 void main()
@@ -339,14 +339,15 @@ void main()
 
 
 	/*int index;
-	//int value;
+	int data;
 	cout << "Type index of deleting element: "; cin >> index;
 	list.erase(index);
 
-	list.print();*/
+	list.print();
 	//list.print_reverse();
-	/*cout << "¬ведите индекс: "; cin >> index;
-	cout << "¬ведите значение по индуксы: "; cin >> value;
+	cout << "¬ведите индекс: "; cin >> index;
+	cout << "¬ведите значение по индуксы: "; cin >> data;
+	list.insert(index, data);
 	list.print();*/
 
 #ifdef COPY_METHODS
@@ -363,7 +364,7 @@ void main()
 	cout << "\n===============================================\n";
 #endif // COPY_METHODS
 
-	List list = { 3, 5, 8, 13, 21 };
+	//List list = { 3, 5, 8, 13, 21 };
 	/*list.print();
 	for (int i : list)
 	{
